@@ -1,0 +1,10 @@
+Flask==3.0.0
+langchain
+weaviate-client
+langchain-openai 
+langchain_core 
+langchain-community 
+langchainhub 
+openai 
+nest_asyncio
+paramiko

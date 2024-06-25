@@ -1,0 +1,254 @@
+:root {
+  /* PALETTE  */
+  --subtle-gray: #AAAAAA; /* "Aluminum" in BFA talk*/
+  --light-gray: #ECECEC; /* "light-grey" in BFA talk*/
+  --turquoise: #06AFAA; /* "TEAL" in BFA talk*/
+  --bfa-blue: #142B35; /* "DARK TEAL" in BFA talk*/
+  --blue-grey:  #44546A; /* "blue-grey" in BFA talk*/
+  --white: #ffffff;
+
+  /* --subtle-gray: #e0e3e5;
+  --turquoise: #09aeaa;
+  --white: #ffffff;
+  --bfa-blue: #142835;
+  --background-blue: #121212;
+  --medium-blue: #295166;
+  --dark-blue: #1d3a49;
+  --light-grey: #f0f0f0; /* Light gray, close to white 
+  --brigther-light-grey: #ffffff; Slightly brighter on hover */
+  
+  /* BORDERS */
+  --border-sm: 2px;
+  --border-radius-sm: 10px;
+  --border-radius-m: 20px;
+  --border-radius-l: 40px;
+
+  /* FONTS */
+  --century-gothic: century-gothic, sans-serif;
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--century-gothic);
+  background-color: var(--bfa-blue);
+  color: var(--turquoise);
+}
+
+header {
+  height: 5vh;
+  padding: 10px 35px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#main {
+  padding: 0 40px;
+  justify-content: center;
+  align-items: center;
+}
+
+#chat-container {
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  max-width: 80%;
+  margin: 0 auto;
+  padding: 7px 10px;
+  overflow-y: auto;
+  scrollbar-color: #888 transparent;
+}
+
+#chat-container::-webkit-scrollbar-track {
+  background: transparent; /* Make the track color transparent */
+}
+
+#message-bar {
+  flex-grow: 1;
+  flex-shrink: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 80%;
+  margin: 0 auto;
+  padding: 7px 20px;
+  background-color: var(--white);
+  border-radius: var(--border-radius-sm);
+}
+
+@media (max-width: 1000px) {
+  #chat-container {
+    height: 75vh;
+    scrollbar-color: #888 transparent;
+  }
+  #chat-container::-webkit-scrollbar-track {
+    background: transparent; /* Make the track color transparent */
+  }
+  #message-bar {
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    gap: 0px;
+    justify-content: center;
+  }
+}
+
+.message {
+  padding: 10px 20px;
+  border-radius: 16px;
+  margin: 5px;
+  max-width: 80%;
+  word-wrap: break-word;
+}
+
+.user-message {
+  background-color: var(--dark-blue);
+  color: var(--subtle-gray);
+  margin-right: 20px;
+  text-align: right;
+  justify-self: right;
+  margin-left: auto;
+}
+
+.assistant-message {
+  color: var(--subtle-gray);
+  margin-left: 20px;
+  text-align: left;
+  justify-self: left;
+}
+
+.assistant-message a {
+  color: var(--light-grey); /* Light gray, close to white */
+  text-decoration: underline; /* Optional, to make links visibly clickable */
+}
+
+.assistant-message a:hover {
+  color: var(--brigther-light-grey); /* Slightly brighter on hover */
+}
+
+
+.voice-recording {
+  animation: pulse 1s infinite;
+}
+
+.User {
+  color: var(--turquoise);
+}
+
+.Assistant {
+  color: var(--turquoise);
+}
+
+button,
+label {
+  background-color: transparent;
+  width: auto;
+  margin: 0 5px;
+  font-family: var(--century-gothic);
+  font-size: 16px;
+  line-height: 1.5;
+  border: none;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+}
+
+#new-chat-btn {
+  color: var(--turquoise);
+}
+
+input[type="file"]#file-input {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+pre,
+code {
+  background-color: #858585;
+  border-radius: 4px;
+  font-family: "Helvetica", sans-serif;
+  white-space: pre-wrap;
+}
+
+#chat-input {
+  background-color: transparent;
+  min-width: 80%;
+  min-height: 10px;
+  border: 0;
+  border-radius: 10px;
+  padding: 7px 15px 0px 15px;
+  font-family: var(--century-gothic);
+  line-height: 20px;
+  resize: none;
+}
+
+#chat-input:active,
+#chat-input:focus {
+  outline: none;
+}
+
+#attach-btn {
+  display: none;
+}
+
+#send-btn,
+#voice-input-btn,
+#attach-btn {
+  border-radius: var(--border-radius-sm);
+  color: var(--medium-blue);
+}
+
+#voice-input-btn {
+  display: none;
+}
+
+#send-btn:hover,
+#new-chat-btn:hover,
+#voice-input-btn:hover,
+#attach-btn:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+#thread-id {
+  margin: 10px 0;
+  color: #bbbbbb;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loader {
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #3498db;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

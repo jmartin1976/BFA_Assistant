@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>BFA Assistant</title>
+    <link
+      rel="icon"
+      href="{{ url_for('static', filename='favicon.png') }}"
+      type="image/png"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <script
+      src="https://kit.fontawesome.com/74d0800d7e.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <header>
+      <h2>BFA Assistant</h2>
+      <button id="new-chat-btn">
+        <i class="fa-regular fa-pen-to-square"></i>
+      </button>
+    </header>
+    <div id="main">
+      <div id="chat-container"></div>
+      <div id="message-bar">
+        <div id="attach-btn">
+          <label for="file-input" id="file-input-label">
+            <i class="fa-solid fa-paperclip"></i>
+          </label>
+          <input type="file" id="file-input" multiple style="display: none" />
+        </div>
+        <textarea
+          id="chat-input"
+          placeholder="Type your question here..."
+        ></textarea>
+        <button id="voice-input-btn">
+          <i class="fa-solid fa-microphone"></i>
+        </button>
+        <button id="send-btn">
+          <i class="fa-solid fa-circle-arrow-up"></i>
+        </button>
+      </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+      // Function to append user message to the chat
+      function appendUserMessage(message) {
+        const msgContainer = document.getElementById("chat-container");
+        const msgDiv = document.createElement("div");
+        msgDiv.className = "message user-message"; // Apply the user-message CSS class
+        msgDiv.textContent = message;
+        msgContainer.appendChild(msgDiv);
+      }
+
+      // Function to simulate an assistant message
+      function simulateAssistantReply() {
+        // This could be replaced with a real response from a server
+        appendAssistantMessage("Hello!  How can I help you today?");
+      }
+
+      // Function to send user input to the backend and receive an assistant response
+      function sendUserInput(threadId, userInput, files = []) {
+        // Show loading indicator while waiting for the response
+        showLoadingOnButton();
+
+        // Immediately display the user's message in the chat history
+        addToChatHistory("User", userInput);
+
+        // Prepare the POST request data
+        let postData = {
+          input: userInput,
+          thread_id: threadId,
+        };
+
+        if (files.length > 0) {
+          postData.file_ids = files.map((file) => file.id); // Assuming 'files' is an array of file objects with an 'id' property
+        }
+
+        // Execute the POST request to the '/ask' endpoint
+        fetch("/ask", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(postData),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            hideLoadingOnButton(); // Hide loading indicator when data is received
+            addToChatHistory("Assistant", data); // Add assistant's response to the chat history
+          })
+          .catch((error) => {
+            hideLoadingOnButton();
+            console.error("Error:", error);
+            addToChatHistory("Error", "Error sending message.");
+          });
+      }
+    </script>
+  </body>
+</html>
